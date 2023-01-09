@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myproxy-controller
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: myproxy-controller
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myproxy-controller
+    spec:
+      nodeName: vm-0-16-centos # 只调度到这个节点上
+      serviceAccountName: myproxy-sa # 配置service account
+      containers:
+        - name: myproxy
+          image: alpine:3.12
+          imagePullPolicy: IfNotPresent
+          workingDir: "/app"
+          command: ["./myproxyoperator"]
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: app
+          hostPath:
+             path: /root/k8s-operator-proxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myproxy-svc
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 31180
+  selector:
+    app: myproxy-controller
+---

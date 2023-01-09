@@ -4,10 +4,13 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"log"
+	"try_operator/pkg/common"
 )
 
 func K8sRestConfig() *rest.Config {
-	config, err := clientcmd.BuildConfigFromFlags("", "/Users/zhenyu.jiang/go/src/golanglearning/new_project/try_operator/resource/config")
+	// 读取配置
+	path := common.GetWd()
+	config, err := clientcmd.BuildConfigFromFlags("", path + "/resource/config")
 	if err != nil {
 		log.Fatal(err)
 	}
