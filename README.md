@@ -4,9 +4,8 @@
 ### 项目思路与功能
 设计背景：集群的网关通常都是采用nginx-controller部署的方式，对自用小集群难免存在部署步骤复杂且资源消耗大等问题。
 本项目在此问题上，基于k8s原有的ingress资源上进行简易适配，做出一个有反向代理功能的controller应用。调用方可在cluster中部署与启动相关配置即可使用。
-
-思路：当应用启动后，会启动一个controller，使用
-
+![](https://github.com/googs1025/kubernetes-simple-proxy-operator/blob/main/images/%E6%B5%81%E7%A8%8B%E5%9B%BE%20(2).jpg?raw=true)
+思路：当应用启动后，会启动一个controller与proxy反向代理服务，controller会监听ingress资源(annotation需要限定)，并执行相应的业务逻辑。
 
 ### 项目部署
 1. 进入目录(上传到有集群的机器上 ex:云服务器)
