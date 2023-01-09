@@ -27,7 +27,7 @@ func ParseRule()  {
 			for _, path := range rule.HTTP.Paths {
 				//构建 ReverseProxy代理对象
 				rProxy := proxy.NewReverseProxy(
-					fmt.Sprintf("%s:%d",path.Backend.Service.Name,path.Backend.Service.Port.Number))
+					fmt.Sprintf("%s:%d", path.Backend.Service.Name, path.Backend.Service.Port.Number))
 				// 建造者模式使用
 				routeBud := NewRouteBuilder()
 

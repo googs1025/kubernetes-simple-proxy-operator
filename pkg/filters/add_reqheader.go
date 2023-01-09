@@ -29,7 +29,7 @@ func(a *AddRequestHeaderFilter) Do(ctx *fasthttp.RequestCtx){
 	 for _, kv := range kvList {
 	 	keyAndValue := strings.Split(kv,"=")
 	 	if len(keyAndValue) == 2 {
-			ctx.Request.Header.Add(keyAndValue[0],keyAndValue[1])
+			ctx.Request.Header.Add(keyAndValue[0], keyAndValue[1])
 		}
 	 }
 

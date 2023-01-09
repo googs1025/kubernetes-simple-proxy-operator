@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	ProxyControllerAnnotation = "jtthink"
+	ProxyControllerAnnotation = "myproxy"
 	ingressAnnotationKey = "kubernetes.io/ingress.class"
 )
 

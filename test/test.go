@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/valyala/fasthttp"
 	"github.com/yeqown/log"
+	"k8s.io/klog/v2"
 	"try_operator/pkg/filters"
 	"try_operator/pkg/sysconfig"
 )
@@ -24,7 +25,12 @@ func ProxyHandler(ctx *fasthttp.RequestCtx){
 
 func main() {
 	// 初始化配置文件
-	sysconfig.InitConfig()
+	err := sysconfig.InitConfig()
+	if err != nil {
+		klog.Error("config error")
+		return
+	}
+	klog.Info("start server!")
 	// 启动http
-	log.Fatal(fasthttp.ListenAndServe(fmt.Sprintf(":%d", sysconfig.SysConfig.Server.Port),ProxyHandler))
+	log.Fatal(fasthttp.ListenAndServe(fmt.Sprintf(":%d", sysconfig.SysConfig.Server.Port), ProxyHandler))
 }

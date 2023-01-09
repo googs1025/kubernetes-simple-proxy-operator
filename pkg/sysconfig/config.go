@@ -10,7 +10,7 @@ import (
 )
 
 type Server struct {
-	Port int   //代表是代理启动端口
+	Port int  //代表是代理启动端口
 }
 
 // app.yaml的配置文件内容
@@ -21,12 +21,7 @@ type SysConfigStruct struct {
 
 
 
-func NewSysConfig() *SysConfigStruct {
-	return &SysConfigStruct{
-	}
-}
-
-var SysConfig *SysConfigStruct
+var SysConfig = new(SysConfigStruct)
 
 func InitConfig() error {
 	// 读取yaml配置
@@ -35,7 +30,7 @@ func InitConfig() error {
 		return err
 	}
 
-	SysConfig = NewSysConfig()
+	//SysConfig = NewSysConfig()
 
 	err = yaml.Unmarshal(config, SysConfig)
 	if err != nil {

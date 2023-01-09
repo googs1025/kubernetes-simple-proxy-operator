@@ -19,6 +19,9 @@ spec:
         - name: myproxy
           image: alpine:3.12
           imagePullPolicy: IfNotPresent
+          env:
+            - name: "Release"
+              value: "1"
           workingDir: "/app"
           command: ["./myproxyoperator"]
           volumeMounts:

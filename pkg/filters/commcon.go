@@ -4,7 +4,7 @@ import (
 	"github.com/valyala/fasthttp"
 	"reflect"
 )
-const AnnotationPrefix = "jtthink.ingress.kubernetes.io"
+const AnnotationPrefix = "myproxy.ingress.kubernetes.io"
 //所有过滤器 的接口
 type ProxyFilter interface {
 	SetPath(path string)  //用来设置  path的设置（带正则支持)-----并不是所有过滤器都要用到

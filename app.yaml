@@ -1,82 +1,35 @@
-Ingress:
-- apiVersion: networking.k8s.io/v1
-  kind: Ingress
-  metadata:
-    annotations:
-      jtthink.ingress.kubernetes.io/add-request-header: name=shenyi;age=19
-      jtthink.ingress.kubernetes.io/add-response-header: ret=ok
-      jtthink.ingress.kubernetes.io/rewrite-target: /$1
-      kubernetes.io/ingress.class: jtthink
-    creationTimestamp: null
-    name: ingress-myservicea
-  spec:
-    rules:
-    - host: aabb.com
-      http:
-        paths:
-        - backend:
-            service:
-              name: www.jtthink.com
-              port:
-                number: 80
-          path: /jtthink/{param:.*}
-          pathType: null
-        - backend:
-            service:
-              name: www.baidu.com
-              port:
-                number: 80
-          path: /baidu/{param:.*}
-          pathType: null
-        - backend:
-            service:
-              name: cloud.tencent.com
-              port:
-                number: 80
-          path: /cccccc/{param:.*}
-          pathType: null
-  status:
-    loadBalancer: {}
-- apiVersion: networking.k8s.io/v1
-  kind: Ingress
-  metadata:
-    annotations:
-      kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"kubernetes.io/ingress.class":"jtthink"},"name":"my-ingress","namespace":"default"},"spec":{"rules":[{"host":"test.jtthink.com111","http":{"paths":[{"backend":{"service":{"name":"nginx","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}]}}
-      kubernetes.io/ingress.class: jtthink
-    creationTimestamp: "2023-01-08T15:05:43Z"
-    generation: 1
-    managedFields:
-    - apiVersion: networking.k8s.io/v1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:metadata:
-          f:annotations:
-            .: {}
-            f:kubectl.kubernetes.io/last-applied-configuration: {}
-            f:kubernetes.io/ingress.class: {}
-        f:spec:
-          f:rules: {}
-      manager: kubectl-client-side-apply
-      operation: Update
-      time: "2023-01-08T15:05:43Z"
-    name: my-ingress
-    namespace: default
-    resourceVersion: "10979360"
-    uid: dc2eb22d-8abf-446a-b0ae-0992d5dfb6d1
-  spec:
-    rules:
-    - host: test.jtthink.com111
-      http:
-        paths:
-        - backend:
-            service:
-              name: nginx
-              port:
-                number: 80
-          path: /
-          pathType: Prefix
-  status:
-    loadBalancer: {}
-Server:
-  Port: 0
+server:
+  port: 80
+ingress:
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: ingress-myservicea
+      annotations:
+        myproxy.ingress.kubernetes.io/add-request-header: name=shenyi;age=19
+        myproxy.ingress.kubernetes.io/add-response-header: ret=ok
+        myproxy.ingress.kubernetes.io/rewrite-target: /$1
+        kubernetes.io/ingress.class: myproxy
+    spec:
+      rules:
+        - host: test.jtthink.com
+          http:
+            paths:
+              - path: /jtthink/{param:.*}
+                backend:
+                  service:
+                    name: localhost
+                    port:
+                      number: 8080
+              - path: /baidu/{param:.*}
+                backend:
+                  service:
+                    name: www.baidu.com
+                    port:
+                      number: 80
+              - path: /cccccc/{param:.*}
+                backend:
+                  service:
+                    name: cloud.tencent.com
+                    port:
+                      number: 80
