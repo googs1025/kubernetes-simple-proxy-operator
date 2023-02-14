@@ -8,6 +8,6 @@ type Builder struct {
 	runtime.SchemeBuilder
 }
 
-func(b *Builder) AddSceme(scheme *runtime.Scheme) error{
+func(b *Builder) AddScheme(scheme *runtime.Scheme) error{
 	return b.AddToScheme(scheme)
 }
